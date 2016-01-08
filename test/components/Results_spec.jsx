@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import {Map, List} from 'immutable';
 import ReactTestUtils from 'react-addons-test-utils';
-import Results from '../../src/components/Results';
+import {Results} from '../../src/components/Results';
 import {expect} from 'chai';
 
 const {
