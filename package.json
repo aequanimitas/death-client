@@ -25,10 +25,12 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "history": "^1.17.0",
     "immutable": "^3.7.6",
     "react": "^0.14.6",
     "react-addons-pure-render-mixin": "^0.14.6",
-    "react-dom": "^0.14.6"
+    "react-dom": "^0.14.6",
+    "react-router": "^1.0.3"
   },
   "babel": {
     "presets": [

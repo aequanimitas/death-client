@@ -4,7 +4,7 @@ import Winner from './Winner';
 import Vote from './Vote';
 
 export default React.createClass({
-  mixins: PureRenderMixin,
+  mixins: [PureRenderMixin],
   render: function() {
     return <div>
     {this.props.winner ?
