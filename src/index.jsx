@@ -1,24 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Router, {Route, DefaultRoute} from 'react-router';
-import {createStore} from 'redux';
+import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import io from 'socket.io-client';
 import reducer from './reducer';
+import {setState} from './action_creators';
+import remoteActionMiddleware from './remote_action_middleware';
 import App from './components/App';
 import {Voting, VotingContainer} from './components/Voting';
 import {Results, ResultsContainer} from './components/Results';
 
-const store = createStore(reducer);
 const socket = io(`${location.protocol}//${location.hostname}:12010`);
 socket.on('state', (state) => {
-  console.log('Inside socket callback on index.jsx');
-  console.log(state);
-  store.dispatch({
-    type: 'SET_STATE', 
-    state: state
-  });
+  store.dispatch(setState(state));
 });
+
+const createStoreWithMiddleware = applyMiddleware(
+  remoteActionMiddleware(socket)
+)(createStore);
+
+const store = createStoreWithMiddleware(reducer);
+
 const routes = <Route component={App}>
   <Route path="/results" component={ResultsContainer} />
   <Route path="/" component={VotingContainer} />

@@ -67,4 +67,63 @@ describe('reducer', () => {
       }
     }));
   });
+
+  it('handles VOTE by changing has Voted', () => {
+    const state = fromJS({
+      vote: {
+        pair: 'Human Leprosy'.split(' '),
+        tally: {Human: 1}
+      }
+    });
+    const action = {type: 'VOTE', entry: 'Human'};
+    const nextState = reducer(state, action);
+    expect(nextState).to.equal(fromJS({
+      vote: {
+        pair: ['Human', 'Leprosy'],
+        tally: {Human: 1}
+      },
+      hasVoted: 'Human'
+    }));
+  });
+
+  it('does not set hasVoted for VOTE on invalid entry', () => {
+    const state = fromJS({
+      vote: {
+        pair: 'Human Leprosy'.split(' '),
+        tally: {Human: 1}
+      }
+    });
+    const action = {type: 'VOTE', entry: 'Spiritual Healing'};
+    const nextState = reducer(state, action);
+    expect(nextState).to.equal(fromJS({
+      vote: {
+        pair: ['Human', 'Leprosy'],
+        tally: {Human: 1}
+      }
+    }));
+  });
+
+  it('removes hasVoted on SET_STATE if pair changes', () => {
+    const state = fromJS({
+      vote: {
+        pair: 'Human Leprosy'.split(' '),
+        tally: {Human: 1}
+      },
+      hasVoted: 'Human'
+    });
+    const action = {
+      type: 'SET_STATE', 
+      state: {
+        vote: {
+          pair: ['Spiritual Healing', 'Screamy Bloody Gore']
+        }
+      }
+    };
+    const nextState = reducer(state, action);
+    expect(nextState).to.equal(fromJS({
+      vote: {
+        pair: ['Spiritual Healing', 'Screamy Bloody Gore']
+      }
+    }));
+  });
 });
