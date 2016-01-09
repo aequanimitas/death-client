@@ -27,11 +27,11 @@ module.exports = {
     hot: true,
     port: port
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin()
-  ],
   node: {
     fs: "empty",
     tls: "empty"
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin()
+  ]
 };
